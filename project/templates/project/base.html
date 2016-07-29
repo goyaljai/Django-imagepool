@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}ImagePool {% endblock %}</title>
+
+    {% load staticfiles %}
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+<link href='https://fonts.googleapis.com/css?family=Roboto:400,500' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" type="text/css" href="{% static 'project/style.css' %}" />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+
+
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar">
+            <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+          </button>
+            <a class="navbar-brand" href="{% url 'index' %}">Imagepool</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="topNavBar">
+            <ul class="nav navbar-nav">
+                {% if siteuser == user or siteuser == None or user == None%}
+                {% else %}
+
+                <li class="active">
+                    {% if siteuser.follow_set.all %}
+                {% for theuser in siteuser.follow_set.all %}
+                    {% if user.id == theuser.user.id and siteuser.id == theuser.follower.id %}
+                        <a href="{% url 'unfollow' %}">
+                        <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> Unfollow
+                        </a>
+
+                    {% endif %}
+
+                {% endfor %}
+                    {% else %}
+                    <a href="{% url 'follow' siteuser.id %}">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Follow
+                        </a>
+                    {% endif %}
+
+                </li>{% endif %}
+
+
+            </ul>
+
+            <form class="navbar-form navbar-left" role="search" method="get" action="{% url 'search' %}">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="q" value="{{ request.GET.q }}">
+                </div>
+                <button type="submit" class="btn btn-default">Search</button>
+            </form>
+
+            <ul class="nav navbar-nav navbar-right">
+                {% if siteuser != None and siteuser == user %}<li class="active">
+                    <a href="{% url 'image-add' %}">
+                        <span class="glyphicon glyphicon-plus">&nbsp</span>add image</a>
+                </li>
+                {% endif %}
+                {% if siteuser == user %}
+                <li class="active">
+                    <a href="{% url 'image-add' %}">
+                        <span class="glyphicon glyphicon-plus">&nbsp</span>add image</a>
+                </li>
+
+                {% endif %}
+                {% if siteuser == None %}
+                <li class="active">
+                    <a href="{% url 'register' %}"><span class="glyphicon glyphicon-off">&nbsp</span>Register</a>
+                </li>
+                <li class="active">
+                    <a href="{% url 'login_user' %}"><span class="glyphicon glyphicon-off">&nbsp</span>Log In</a>
+                </li>
+                {% else %}
+                <li class="active">
+                    <a href="{% url 'logout_user' %}"><span class="glyphicon glyphicon-off">&nbsp</span>Log out</a>
+                </li>
+                {% endif %}
+            </ul>
+
+
+        </div>
+    </div>
+</nav>
+
+{% block body %}
+{% endblock %}
+
+</body>
+</html>

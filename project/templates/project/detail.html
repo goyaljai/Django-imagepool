@@ -1,0 +1,113 @@
+
+{% extends 'project/base.html' %}
+{% block title %}{{ siteuser }}{% endblock %}
+{% block albums_active %}active{% endblock %}
+
+
+{% block body %}
+<div class="albums-container container-fluid">
+
+    <div class="row">
+        <div class="col-sm-1">
+             <img src="{{ siteuser.profile_picture.url }}" class = "img-thumbnail">
+            <h4>Followers </h4>
+            {% if siteuser.follow_set.all %}
+            {% for theuser in siteuser.follow_set.all %}
+
+             <a href="{% url 'detail' theuser.follower.id %}" class="btn btn-default btn-sm" role="button">
+                                {{ theuser.follower.username }}
+             </a>
+            {% endfor %}
+            {% else %}
+            <h5>No Followers!!</h5>
+            {% endif %}
+            <h4>Followings</h4>
+            <button type = "button" class = "btn btn-default btn-sm">
+            Jai Goyal
+            </button>
+
+        </div>
+        <div class="col-sm-11">
+           {% if user == siteuser %}<h3>&nbsp&nbsp Hi {{ siteuser.username }} &nbsp!!</h3>
+            {% else %}
+            <h3>&nbsp&nbsp{{ siteuser.username }} </h3>
+            {% endif %}
+        {% if siteuser.image_set.all %}
+            {% for images in siteuser.image_set.all %}
+                {% if images.access_users == 'Pub' %}
+                <div class="col-sm-4 col-lg-4">
+                    <div class="thumbnail">
+                        <a href="#">
+                            <img src="{{ images.image.url }}" style="width: 50%;height: 100%; class="img-responsive">
+                        </a>
+                        <div class="caption">
+                            <h2>{{ images.caption }}</h2>
+
+
+                            <form action="#" method="post" style="display: inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="#" value="#" />
+                                <button type="submit" class="btn btn-default btn-sm">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+                            </form>
+
+                            <form action="{% url 'like-image' images.id %}" method="post" style="display: inline;">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="image_id" value="{{ images.id }}" />
+                                        <button type="submit" class="btn btn-default btn-xs">
+                                            <span class="glyphicon glyphicon-thumbs-up "></span>&nbsp; {{ images.like_count }} &nbsp;Likes
+
+                                        </button>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                    {% if images.access_users == 'Pri' %}
+                        {% if siteuser == user %}
+                            <div class="col-sm-4 col-lg-4">
+                    <div class="thumbnail">
+                        <a href="#">
+                            <img src="{{ images.image.url }}" style="width: 50%;height: 100%; class="img-responsive">
+                        </a>
+                        <div class="caption">
+                            <h2>{{ images.caption }}</h2>
+
+
+                            <form action="#" method="post" style="display: inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="#" value="#" />
+                                <button type="submit" class="btn btn-default btn-sm">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+                            </form>
+                            <button type="submit" class="btn btn-default btn-xs">
+                                            <span class="glyphicon glyphicon-thumbs-up "></span>&nbsp; {{ images.like_count }} &nbsp;Likes
+
+                                        </button>
+                        </div>
+                    </div>
+                </div>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+                {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
+            {% endfor %}
+        {% else %}
+            <div class="col-sm-12">
+                <br>
+                {% if user == siteuser %}<a href="#">
+                    <button type="button" class="btn btn-success">
+                        <span class="glyphicon glyphicon-plus"></span>&nbsp; Add an image
+                    </button>
+                </a>
+                {% endif %}
+            </div>
+            </div>
+        {% endif %}
+    </div>
+
+</div>
+{% endblock %}
