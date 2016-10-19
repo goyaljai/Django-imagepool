@@ -6,6 +6,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     url(r'^imagepool/', include('project.urls')),
     url(r'^admin/', admin.site.urls),
+    url(r'^accounts/', include('allauth.urls')),
 ]
 
 if settings.DEBUG:

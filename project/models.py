@@ -1,8 +1,8 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, PermissionsMixin
 from django.core.urlresolvers import reverse
 import os
-
+from django.contrib.auth.backends import ModelBackend
 
 def get_image_path(instance, filename):
     return os.path.join('profile_pictures', filename)

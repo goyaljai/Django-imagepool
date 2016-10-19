@@ -28,9 +28,13 @@
 
         </div>
         <div class="col-sm-11">
+            {% load account %}
+               {{ csrf_token }}
+{% user_display user %}
            {% if user == siteuser %}<h3>&nbsp&nbsp Hi {{ siteuser.username }} &nbsp!!</h3>
             {% else %}
             <h3>&nbsp&nbsp{{ siteuser.username }} </h3>
+
             {% endif %}
         {% if siteuser.image_set.all %}
             {% for images in siteuser.image_set.all %}

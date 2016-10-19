@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse,redirect,get_object_or_404
+from django.shortcuts import render, HttpResponse,redirect,get_object_or_404,HttpResponseRedirect
 from django.views.generic import View
 from project.forms import LoginForm
 from django.contrib.auth import authenticate
@@ -9,17 +9,31 @@ from django.shortcuts import render
 from project.forms import UserForm
 from django.contrib.auth import logout
 from django.views.generic.edit import CreateView
+from allauth.account.views import LoginView
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 import re
 import operator
 from django.db.models import Q
+# from django.contrib.auth.mixins import LoginRequiredMixin
+# this is used when we want to use login_required for views
+from project.mixins import LoginRequiredMixin,LogoutRequiredMixin
+from django.contrib.auth.models import Group
 
 
 def index(request):
+    # values = request.META.items()
+    # values = sorted(values)
+    # html = []
+    # for k, v in values:
+    #     html.append('<tr><td>%s</td><td>%s</td></tr>' % (k, v))
+    # return HttpResponse('<table>%s</table>' % '\n'.join(html))
 
     if request.user.id is None:
-        return redirect('register')
-    return redirect('detail', pk=request.user.id)
+        return redirect('login_user')
+    else:
+       # return redirect('detail', pk=request.user.id)
+        return HttpResponseRedirect(reverse('detail', args=(request.user.id,)))
 
 
 class DetailView(generic.DetailView):
@@ -37,6 +51,8 @@ class UserListView(generic.ListView):
 
 
 class LoginFormView(View):
+
+
 
     form_class = LoginForm
     template_name = 'project/login.html'
@@ -61,8 +77,8 @@ class LoginFormView(View):
 
         return render(request, self.template_name, {'form': form})
 
-
-class RegisterView(View):
+# only we can see this if and only if user is logged out because if he is loged in then there is no point using the register
+class RegisterView(LogoutRequiredMixin,View):
 
     form_class = UserForm
     template_name = 'project/register.html'
@@ -86,13 +102,21 @@ class RegisterView(View):
             password = form.cleaned_data['password']
 
             user.set_password(password)
+            g = Group.objects.get(name='Male')
+            if user.gender == 'M':
+                user.groups.add(g)
+
             user.save()
 
             # returns users objects if credentials are correct
 
+
+
             user = authenticate(username=username,password=password)
 
-            if user is not None:
+
+
+        if user is not None:
 
                 if user.is_active:
                     login(request, user)
@@ -133,9 +157,11 @@ class ImageCreate(CreateView):
         return super(ImageCreate, self).form_valid(form)
 
 
+
 def search(request):
     result = SiteUser.objects.all()
     query = request.GET.get("q")
+
     if query:
         result = result.filter(Q(username__icontains=query)).distinct()
         return render(request, 'project/search.html', {

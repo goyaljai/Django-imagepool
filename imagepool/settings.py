@@ -27,10 +27,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
+    'django.contrib.sites',
     'project.apps.ProjectConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -38,6 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'allauth',
+    'allauth.account',
+   'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
+
+
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -64,6 +70,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.csrf',
             ],
         },
     },
@@ -71,7 +78,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'imagepool.wsgi.application'
 
-
+FACEBOOK_APP_ID = 1636363996677144
+FACEBOOK_API_SECRET = "cdcd368534f1a109a81f226105b3679d"
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
@@ -81,7 +89,7 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-#from django.contrib.auth.backends import ModelBackend
+# from django.contrib.auth.backends import ModelBackend
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
@@ -124,3 +132,17 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+
+)
+
+SITE_ID = 1
+
+LOGIN_REDIRECT_URL = '/imagepool/'
+LOGIN_URL = '/imagepool/login_user/'

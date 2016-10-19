@@ -1,9 +1,14 @@
 <component name="ProjectDictionaryState">
   <dictionary name="Goyal Banna">
     <words>
+      <w>allauth</w>
+      <w>backends</w>
+      <w>imagepool</w>
       <w>siteuser</w>
+      <w>socialaccount</w>
       <w>theuser</w>
       <w>userr</w>
+      <w>wsgi</w>
     </words>
   </dictionary>
 </component>

@@ -16,4 +16,4 @@ class UserForm(forms.ModelForm):
 
     class Meta:
         model = SiteUser
-        fields = ['username', 'profile_picture', 'password']
+        fields = ['username', 'gender','profile_picture', 'password']

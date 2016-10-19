@@ -63,17 +63,10 @@
             </form>
 
             <ul class="nav navbar-nav navbar-right">
-                {% if siteuser != None and siteuser == user %}<li class="active">
+                {% if perms.user.add_image %}<li class="active">
                     <a href="{% url 'image-add' %}">
                         <span class="glyphicon glyphicon-plus">&nbsp</span>add image</a>
                 </li>
-                {% endif %}
-                {% if siteuser == user %}
-                <li class="active">
-                    <a href="{% url 'image-add' %}">
-                        <span class="glyphicon glyphicon-plus">&nbsp</span>add image</a>
-                </li>
-
                 {% endif %}
                 {% if siteuser == None %}
                 <li class="active">
