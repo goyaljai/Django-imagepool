@@ -102,9 +102,9 @@ class RegisterView(LogoutRequiredMixin,View):
             password = form.cleaned_data['password']
 
             user.set_password(password)
-            g = Group.objects.get(name='Male')
-            if user.gender == 'M':
-                user.groups.add(g)
+            # g = Group.objects.get(name='Male')
+            # if user.gender == 'M':
+                # user.groups.add(g)
 
             user.save()
 
