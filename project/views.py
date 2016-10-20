@@ -105,19 +105,12 @@ class RegisterView(LogoutRequiredMixin,View):
             # g = Group.objects.get(name='Male')
             # if user.gender == 'M':
                 # user.groups.add(g)
-
             user.save()
 
             # returns users objects if credentials are correct
-
-
-
             user = authenticate(username=username,password=password)
 
-
-
-        if user is not None:
-
+            if user is not None:
                 if user.is_active:
                     login(request, user)
                     return redirect('detail', pk=user.id)
