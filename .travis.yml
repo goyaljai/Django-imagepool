@@ -17,6 +17,13 @@ deploy:
 script:
   - tox
 env:
-  - TOXENV=django18
-  - TOXENV=django19
+  - TOXENV=py27
+  - TOXENV=py30
+  - TOXENV=py31
+  - TOXENV=py32
+  - TOXENV=py33
+  - TOXENV=py34
+  - TOXENV=py35
+
+
 

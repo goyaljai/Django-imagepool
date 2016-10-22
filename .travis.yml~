@@ -1,9 +1,6 @@
 language: python
 python:
-  - "2.6"
   - "2.7"
-  - "3.2"
-  - "3.3"
   - "3.4"
   - "3.5"
   - "3.5-dev" # 3.5 development branch
@@ -13,8 +10,13 @@ python:
 install: "pip install -r requirements.txt"
 deploy:
   provider: heroku
+  app: theimagepool
   api_key:
     secure: "ad43734c-a279-427b-97a4-abc6f26258c3"
 # command to run tests
-script: nosetests
+script:
+  - tox
+env:
+  - TOXENV=django18
+  - TOXENV=django19
 
