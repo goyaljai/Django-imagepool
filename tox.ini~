@@ -1,25 +1,5 @@
 [tox]
-envlist = django18, django19
-
-
+envlist = py27,py35,py30,py31,py32,py33,py34
 [testenv]
-commands = django-admin.py test
-setenv =
-    DJANGO_SETTINGS_MODULE=imagepool.settings
-    PYTHONPATH={toxinidir}
-
-[base]
-deps =
-    mox
-    nose
-    django-nose
-
-[testenv:django18]
-deps =
-    django>=1.8, <1.9
-    {[base]deps}
-
-[testenv:django19]
-deps =
-    django>=1.9, <2.0
-    {[base]deps}
+deps = -rrequirements.txt
+commands=nosetests
