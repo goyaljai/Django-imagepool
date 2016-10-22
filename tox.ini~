@@ -1,11 +1,15 @@
 [tox]
 envlist = django18, django19
+skipsdist = True
+
 [testenv]
 deps = -r{toxinidir}/requirements.txt
 commands=nosetests
+
 [testenv:django18]
 deps = -r{toxinidir}/requirements.txt
 commands=nosetests
+
 [testenv:django19]
 deps = -r{toxinidir}/requirements.txt
 commands=nosetests
