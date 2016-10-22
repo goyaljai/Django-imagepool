@@ -14,16 +14,11 @@ deploy:
   api_key:
     secure: "ad43734c-a279-427b-97a4-abc6f26258c3"
 # command to run tests
+env:
+  - TOXENV=django18
+  - TOXENV=django19
 script:
   - tox
-env:
-  - TOXENV=py27
-  - TOXENV=py30
-  - TOXENV=py31
-  - TOXENV=py32
-  - TOXENV=py33
-  - TOXENV=py34
-  - TOXENV=py35
 
 
 
