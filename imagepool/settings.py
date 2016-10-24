@@ -146,8 +146,8 @@ AUTHENTICATION_BACKENDS = (
 
 SITE_ID = 1
 
-LOGIN_REDIRECT_URL = '/imagepool/'
-LOGIN_URL = '/imagepool/login_user/'
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/login/'
 
 DATABASES['default'] = dj_database_url.config()
 

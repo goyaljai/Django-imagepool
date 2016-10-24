@@ -57,6 +57,7 @@ class LoginFormView(View):
     form_class = LoginForm
     template_name = 'project/login.html'
 
+
     def get(self, request):
         form = self.form_class(None)
         return render(request, self.template_name, {'form': form})
@@ -76,6 +77,11 @@ class LoginFormView(View):
                 return redirect('detail', pk=user.id)
 
         return render(request, self.template_name, {'form': form})
+
+class TheLoginView(LoginView):
+    #form_class = LoginForm
+    # success_url = '/'
+    template_name = 'project/login.html'
 
 # only we can see this if and only if user is logged out because if he is loged in then there is no point using the register
 class RegisterView(LogoutRequiredMixin,View):
