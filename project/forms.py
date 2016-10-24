@@ -19,8 +19,8 @@ class LoginForm(forms.ModelForm):
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
     GENDER_CHOICES = (
-        ('M', 'Male'),
-        ('F', 'Female'),
+        ('male', 'Male'),
+        ('female', 'Female'),
         #('2'or, 'Transgender')
     )
     gender = forms.ChoiceField(choices=GENDER_CHOICES,widget=forms.RadioSelect())
