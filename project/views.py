@@ -40,6 +40,13 @@ class DetailView(generic.DetailView):
     model = SiteUser
     template_name = 'project/detail.html'
 
+    def get(self, request, *args, **kwargs):
+        abc = super(generic.DetailView,self).get(request,*args,**kwargs)
+        if(request.user.has_usable_password()):
+            return abc
+        else:
+            return redirect('setPassword')
+
 
 class UserListView(generic.ListView):
 

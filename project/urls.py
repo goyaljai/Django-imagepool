@@ -1,7 +1,7 @@
 from django.conf.urls import url
 
 from project import views
-
+from allauth.account.views import PasswordSetView
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^(?P<pk>[0-9]+)$', views.DetailView.as_view(), name='detail'),
@@ -13,7 +13,7 @@ urlpatterns = [
     url(r'^like_image/(?P<image_id>[0-9]+)/$', views.like_image, name='like-image'),
     url(r'all_users/$', views.UserListView.as_view(), name='all-users'),
     url(r'search/', views.search, name='search'),
-    #url(r'^login_user/$', views.LoginFormView.as_view(), name='login_user'),
+    url(r'^changePassword',PasswordSetView.as_view(),name='setPassword'),
 
     url(r'^unfollow/$', views.unfollow, name='unfollow'),
 ]

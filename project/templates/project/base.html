@@ -59,7 +59,7 @@
 
   window.fbAsyncInit = function() {
   FB.init({
-    appId      : '{your-app-id}',
+    appId      : '1636363996677144',
     cookie     : true,  // enable cookies to allow the server to access
                         // the session
     xfbml      : true,  // parse social plugins on this page
@@ -180,9 +180,8 @@
                 </li>
                 {% endif %}
             </ul>
-        {% load socialaccount %}
-{% providers_media_js %}
-<a href="{% provider_login_url "facebook" method="js_sdk" %}">Facebook Connect</a>
+       {% load socialaccount %}
+<a href="{% provider_login_url "facebook" method="oauth2" %}">Facebook OAuth2</a>
 
         </div>
     </div>
