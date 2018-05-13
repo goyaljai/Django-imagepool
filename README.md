@@ -1,4 +1,4 @@
-![Build Status](https://api.travis-ci.org/goyaljai/Django-imagepool.svg?branch=master)
+![Build Status](https://api.travis-ci.org/goyaljai/Imagepool.svg?branch=master)
 
 # Django-imagepool
 
